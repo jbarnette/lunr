@@ -7,7 +7,7 @@ module Lunr
   extend Configlet
   
   # Duh.
-  VERSION = "1.0.0"
+  VERSION = "1.0.1"
 
   config :lunr do
     default :pp  => "25"

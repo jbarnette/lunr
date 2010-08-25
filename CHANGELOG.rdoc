@@ -1,3 +1,7 @@
+=== 1.0.1 / 2010-08-25
+
+* Handle missing :p value correctly.
+
 === 1.0.0 / 2010-08-25
 
 * Birthday!
