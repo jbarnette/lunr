@@ -15,7 +15,7 @@ module Lunr
   end
 
   def self.search query, options = {}, &block
-    page = [1, Integer(options[:p])].max
+    page = [1, Integer(options[:p] || 0)].max
     per  = Integer options[:pp] || self[:pp]
 
     params = {
