@@ -1,0 +1,9 @@
+.autotest
+CHANGELOG.rdoc
+Isolate
+Manifest.txt
+README.rdoc
+Rakefile
+lib/lunr.rb
+lib/lunr/error.rb
+test/test_lunr.rb

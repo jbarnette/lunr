@@ -1,0 +1,67 @@
+= Lunr
+
+* http://github.com/jbarnette/lunr
+
+== Description
+
+A simple read-only interface to Solr, built on RSolr.
+
+Lunr makes it easy to query and create objects from a Solr index
+without requiring all the knowledge, code, and data that was used to
+build the index in the first place.
+
+If you have complex indexes with a stored fields and need to search /
+access those fields without access to the original data store, Lunr
+might be what you're looking for.
+
+As seen in Sunspot and similar tools, if
+<code>WillPaginate::Collection</code> is available it'll be wrapped
+around the results of any search.
+
+== Examples
+
+  require "lunr"
+
+  # set ENV["LUNR_URL"], or...
+  Lunr[:url] = "http://localhost:8983/solr"
+
+  # simplest possible, returns a hash
+  Lunr.search "foo"
+
+  # returns the result of the block for each entry
+  Lunr.search "foo" do |raw|
+    MyReadOnlyModelClass.new raw
+  end
+
+  # pagination is part of solr, select a page with :p
+  Lunr.search "foo", :p => params[:page]
+
+  # default per page is 25, but you can set ENV["LUNR_PP"] or...
+  Lunr.search "foo", :p => params[:page], :pp => 500
+
+== Installation
+
+    $ gem install lunr
+
+== License
+
+Copyright 2010 John Barnette (code@jbarnette.com)
+
+Permission is hereby granted, free of charge, to any person obtaining
+a copy of this software and associated documentation files (the
+'Software'), to deal in the Software without restriction, including
+without limitation the rights to use, copy, modify, merge, publish,
+distribute, sublicense, and/or sell copies of the Software, and to
+permit persons to whom the Software is furnished to do so, subject to
+the following conditions:
+
+The above copyright notice and this permission notice shall be
+included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED 'AS IS', WITHOUT WARRANTY OF ANY KIND,
+EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY
+CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
+TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
+SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
