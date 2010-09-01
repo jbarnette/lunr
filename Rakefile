@@ -1,3 +1,4 @@
+require "isolate/now"
 require "hoe"
 
 Hoe.plugins.delete :rubyforge
