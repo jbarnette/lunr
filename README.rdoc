@@ -4,7 +4,7 @@
 
 == Description
 
-A simple read-only interface to Solr, built on RSolr.
+A simple read-only interface to Solr, built on Sunspot.
 
 Lunr makes it easy to query and create objects from a Solr index
 without requiring all the knowledge, code, and data that was used to
@@ -14,30 +14,34 @@ If you have complex indexes with a stored fields and need to search /
 access those fields without access to the original data store, Lunr
 might be what you're looking for.
 
-As seen in Sunspot and similar tools, if
-<code>WillPaginate::Collection</code> is available it'll be wrapped
-around the results of any search.
-
 == Examples
 
   require "lunr"
 
-  # set ENV["LUNR_URL"], or...
-  Lunr[:url] = "http://localhost:8983/solr"
+  class My::SimpleTrack
+    include Lunr::Model
 
-  # simplest possible, returns a hash
-  Lunr.search "foo"
+    searches "Track" do
+      property :album,  :text
+      property :artist, :text
+      property :title,  :text
 
-  # returns the result of the block for each entry
-  Lunr.search "foo" do |raw|
-    MyReadOnlyModelClass.new raw
+      time    :accepted_at
+      boolean :hot
+      string  :state
+    end
+
+    scope do |q|
+      q.order_by :hot, :desc
+      q.order_by :accepted_at, :desc
+
+      q.with :state, "accepted"
+    end
+
+    scope :hot do |q|
+      q.with :hot, true
+    end
   end
-
-  # pagination is part of solr, select a page with :p
-  Lunr.search "foo", :p => params[:page]
-
-  # default per page is 25, but you can set ENV["LUNR_PP"] or...
-  Lunr.search "foo", :p => params[:page], :pp => 500
 
 == Installation
 
