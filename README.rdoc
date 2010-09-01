@@ -38,8 +38,12 @@ might be what you're looking for.
       q.with :state, "accepted"
     end
 
-    scope :hot do |q|
-      q.with :hot, true
+    scope :hot do
+      with :hot, true
+    end
+
+    scope :state do |q, state|
+      q.with :state, state
     end
   end
 

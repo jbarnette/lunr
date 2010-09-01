@@ -5,6 +5,10 @@ Manifest.txt
 README.rdoc
 Rakefile
 lib/lunr.rb
+lib/lunr/errors.rb
 lib/lunr/model.rb
+lib/lunr/search.rb
+lib/lunr/sunspot.rb
 test/test_lunr.rb
 test/test_lunr_model.rb
+test/test_lunr_search.rb
