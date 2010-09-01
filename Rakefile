@@ -1,3 +1,7 @@
+unless Gem.available? "isolate"
+  abort "Please `gem install isolate` and run rake again."
+end
+
 require "isolate/now"
 require "hoe"
 
