@@ -8,6 +8,10 @@ module Lunr
     end
 
     module Klass
+      def first &block
+        search(&block).first
+      end
+
       def properties
         @properties ||= {}
       end
