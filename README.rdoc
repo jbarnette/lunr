@@ -56,7 +56,7 @@ All model class must <code>include Lunr::Model</code>.
 Time to tell Solr what this class searches, and which fields are
 properties. The DSL in here is exactly the same as Sunspot's, with the
 addition of a <code>property</code> method. Calling
-<cod>property</code> tells Lunr that you expect access to this field,
+<code>property</code> tells Lunr that you expect access to this field,
 generates an <code>attr_reader</code> and passes it along to Sunspot's
 DSL as <code>:stored => true</code>.
 
