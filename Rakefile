@@ -11,7 +11,7 @@ Hoe.plugin :doofus, :git, :isolate
 Hoe.spec "lunr" do
   developer "John Barnette", "code@jbarnette.com"
 
-  required_ruby_version ">= 1.8.7"
+  require_ruby_version ">= 1.8.7"
 
   self.extra_rdoc_files = Dir["*.rdoc"]
   self.history_file     = "CHANGELOG.rdoc"
