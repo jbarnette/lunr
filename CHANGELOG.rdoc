@@ -1,3 +1,11 @@
+=== 2.0.1 / 2010-09-02
+
+* Clean up model and search.
+
+=== 2.0.0 / 2010-09-01
+
+* Reboot.
+
 === 1.0.1 / 2010-08-25
 
 * Handle missing :p value correctly.
