@@ -14,7 +14,7 @@ If you have complex indexes with a stored fields and need to search /
 access those fields without access to the original data store, Lunr
 might be what you're looking for.
 
-== Examples
+== A Lunr Model
 
   require "lunr"
 
@@ -47,9 +47,97 @@ might be what you're looking for.
     end
   end
 
+=== Including the Module
+
+All model class must `include Lunr::Model`.
+
+=== Define the Search Index
+
+Time to tell Solr what this class searches, and which fields are
+properties. The DSL in here is exactly the same as Sunspot's, with the
+addition of a `property` method. Calling `property` tells Lunr that
+you expect access to this field, generates an `attr_reader` and passes
+it along to Sunspot's DSL as `:stored => true`.
+
+    searches "Track" do
+      property :album,  :text
+      property :artist, :text
+      property :title,  :text
+
+      time    :accepted_at
+      boolean :hot
+      string  :state
+    end
+
+The `searches` method also takes an optional type name, which can be
+used to map Lunr model types to differing search results. In this
+case, `My::SimpleTrack` will search documents with an original type of
+`Track`.
+
+List every criteria you might want to search by, but omit any of
+Sunspot's DSL that involves indexing.
+
+=== Default Scope
+
+Call `scope` with no name to set default filtering, ordering, and
+pagination properties.
+
+    scope do |q|
+      q.order_by :hot, :desc
+      q.order_by :accepted_at, :desc
+
+      q.with :state, "accepted"
+    end
+
+=== Named Scopes
+
+You can define any number of named scopes to make searching
+simpler. They're made availble as static methods on the model class,
+and they're chainable when searching. See the "Searching" section
+below.
+
+    scope :hot do
+      with :hot, true
+    end
+
+Scope blocks without parameters are `instance_eval`ed in the Sunspot
+query DSL's context. If your scope takes parameters, the first param
+must be the Sunspot query object.
+
+    scope :state do |q, state|
+      q.with :state, state
+    end
+
+== Searching
+
+    My::SimpleTrack.search
+    My::SimpleTrack.all # same thing
+
+All searches return a `Lunr::Search` object, and searches can be
+narrowed using the Sunspot query DSL or named scopes. Searches aren't
+run until an `Enumerable`, arraylike, or pagination method is called
+on the search object. For convenience, `Lunr::Search` quacks like
+`WillPaginate::Collection`.
+
+   search = My::SimpleTrack.hot.scope { |q| q.fulltext "hello" }
+   p :page => search.page, :total => search.total
+
+   search.each do |track|
+     puts "#{track.title} by #{track.artist} on #{track.album}."
+   end
+
 == Installation
 
     $ gem install lunr
+
+== Development
+
+Version number notwithstanding, Lunr is under pretty heavy
+development. It's missing a lot of tests, and will be in flux a
+bit. Contributions and suggestions are very welcome.
+
+Install the `isolate` gem and run `rake`. All dev dependencies will be
+installed automatically.
 
 == License
 
