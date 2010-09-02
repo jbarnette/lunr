@@ -1,6 +1,6 @@
 options :system => false
 
-gem "sunspot", "~> 1.1.0"
+gem "sunspot", "1.1.0"
 
 env :development do
   gem "ZenTest",    "4.4.0"
