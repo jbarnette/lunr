@@ -7,6 +7,7 @@ Rakefile
 lib/lunr.rb
 lib/lunr/errors.rb
 lib/lunr/model.rb
+lib/lunr/model/klass.rb
 lib/lunr/search.rb
 lib/lunr/sunspot.rb
 test/test_lunr.rb

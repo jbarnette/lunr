@@ -4,7 +4,7 @@ module Sunspot
   module DSL
     class Fields
       def property name, type, options = {}
-        @setup.clazz.properties << name
+        @setup.clazz.properties[name] = type
         send type, name, options.merge(:stored => true)
       end
     end
@@ -27,12 +27,6 @@ module Sunspot
           @class_name = clazz.name
         end
       end
-    end
-  end
-
-  class Setup
-    def lunr_properties
-      @lunr_properties ||= []
     end
   end
 
