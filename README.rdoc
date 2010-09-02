@@ -49,15 +49,16 @@ might be what you're looking for.
 
 === Including the Module
 
-All model class must `include Lunr::Model`.
+All model class must <code>include Lunr::Model</code>.
 
 === Define the Search Index
 
 Time to tell Solr what this class searches, and which fields are
 properties. The DSL in here is exactly the same as Sunspot's, with the
-addition of a `property` method. Calling `property` tells Lunr that
-you expect access to this field, generates an `attr_reader` and passes
-it along to Sunspot's DSL as `:stored => true`.
+addition of a <code>property</code> method. Calling
+<cod>property</code> tells Lunr that you expect access to this field,
+generates an <code>attr_reader</code> and passes it along to Sunspot's
+DSL as <code>:stored => true</code>.
 
     searches "Track" do
       property :album,  :text
@@ -69,18 +70,18 @@ it along to Sunspot's DSL as `:stored => true`.
       string  :state
     end
 
-The `searches` method also takes an optional type name, which can be
-used to map Lunr model types to differing search results. In this
-case, `My::SimpleTrack` will search documents with an original type of
-`Track`.
+The <code>searches</code> method also takes an optional type name,
+which can be used to map Lunr model types to differing search
+results. In this case, <code>My::SimpleTrack</code> will search
+documents with an original type of <code>Track</code>.
 
 List every criteria you might want to search by, but omit any of
 Sunspot's DSL that involves indexing.
 
 === Default Scope
 
-Call `scope` with no name to set default filtering, ordering, and
-pagination properties.
+Call <code>scope</code> with no name to set default filtering,
+ordering, and pagination properties.
 
     scope do |q|
       q.order_by :hot, :desc
@@ -100,9 +101,9 @@ below.
       with :hot, true
     end
 
-Scope blocks without parameters are `instance_eval`ed in the Sunspot
-query DSL's context. If your scope takes parameters, the first param
-must be the Sunspot query object.
+Scope blocks without parameters are <code>instance_eval</code>ed in
+the Sunspot query DSL's context. If your scope takes parameters, the
+first param must be the Sunspot query object.
 
     scope :state do |q, state|
       q.with :state, state
@@ -113,11 +114,12 @@ must be the Sunspot query object.
     My::SimpleTrack.search
     My::SimpleTrack.all # same thing
 
-All searches return a `Lunr::Search` object, and searches can be
-narrowed using the Sunspot query DSL or named scopes. Searches aren't
-run until an `Enumerable`, arraylike, or pagination method is called
-on the search object. For convenience, `Lunr::Search` quacks like
-`WillPaginate::Collection`.
+All searches return a <code>Lunr::Search</code> object, and searches
+can be narrowed using the Sunspot query DSL or named scopes. Searches
+aren't run until an <code>Enumerable</code>, arraylike, or pagination
+method is called on the search object. For convenience,
+<code>Lunr::Search</code> quacks like
+<code>WillPaginate::Collection</code>.
 
    search = My::SimpleTrack.hot.scope { |q| q.fulltext "hello" }
    p :page => search.page, :total => search.total
@@ -136,8 +138,8 @@ Version number notwithstanding, Lunr is under pretty heavy
 development. It's missing a lot of tests, and will be in flux a
 bit. Contributions and suggestions are very welcome.
 
-Install the `isolate` gem and run `rake`. All dev dependencies will be
-installed automatically.
+Install the <code>isolate</code> gem and run <code>rake</code>. All
+dev dependencies will be installed automatically.
 
 == License
 
