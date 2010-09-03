@@ -10,12 +10,6 @@ module Sunspot
     end
   end
 
-  class Field
-    def stored?
-      @stored
-    end
-  end
-
   module Search
     class Hit
       alias_method :original_initialize, :initialize
