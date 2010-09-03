@@ -31,11 +31,11 @@ might be what you're looking for.
       string  :state
     end
 
-    scope do |q|
-      q.order_by :hot, :desc
-      q.order_by :accepted_at, :desc
+    scope do
+      order_by :hot, :desc
+      order_by :accepted_at, :desc
 
-      q.with :state, "accepted"
+      with :state, "accepted"
     end
 
     scope :hot do
@@ -83,11 +83,11 @@ Sunspot's DSL that involves indexing.
 Call <code>scope</code> with no name to set default filtering,
 ordering, and pagination properties.
 
-    scope do |q|
-      q.order_by :hot, :desc
-      q.order_by :accepted_at, :desc
+    scope do
+      order_by :hot, :desc
+      order_by :accepted_at, :desc
 
-      q.with :state, "accepted"
+      with :state, "accepted"
     end
 
 === Named Scopes
@@ -113,6 +113,9 @@ first param must be the Sunspot query object.
 
     My::SimpleTrack.search
     My::SimpleTrack.all # same thing
+
+    My::SimpleTrack.search { with :title, "Hello" }
+    My::SimpleTrack.first  { with :title, "First!" }
 
 All searches return a <code>Lunr::Search</code> object, and searches
 can be narrowed using the Sunspot query DSL or named scopes. Searches
