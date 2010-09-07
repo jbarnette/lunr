@@ -9,23 +9,20 @@ module Lunr
 
     module Klass
       def create hit
-        new.tap do |instance|
-          instance.id = hit.primary_key
+        hash = { :id => hit.primary_key }
 
-          properties.each do |name, type|
-            value = hit.stored name
+        properties.each do |name, type|
+          value = hit.stored name
 
+          if Array === value && value.length == 1 && type == :text
             # For text fields, which always appear to be multiple.
-
-            if Array === value && value.length == 1 && type == :text
-              value = value.first
-            end
-
-            instance.send "#{name}=", value
+            value = value.first
           end
 
-          instance.freeze
+          hash[name] = value
         end
+
+        new(hash).freeze
       end
 
       def first &block
@@ -45,7 +42,9 @@ module Lunr
 
         unless name == :all
           class_eval <<-END, __FILE__, __LINE__ + 1
-            def self.#{name}; search.#{name} end
+            def self.#{name}
+              search.#{name}
+            end
           END
         end
       end
@@ -61,7 +60,11 @@ module Lunr
         Sunspot.setup self, &block
 
         properties.each do |name, type|
-          attr_accessor name
+          class_eval <<-END, __FILE__, __LINE__ + 1
+            def #{name}
+              @hash[#{name.inspect}]
+            end
+          END
         end
       end
     end
