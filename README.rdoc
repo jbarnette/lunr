@@ -109,7 +109,7 @@ first param must be the Sunspot query object.
 
 == Searching
 
-Use Sunspot's excellent search DSL for ad hock searches.
+Use Sunspot's excellent search DSL for ad hoc searches.
 
     My::SimpleTrack.search
     My::SimpleTrack.all # same thing
