@@ -17,8 +17,8 @@ module Lunr
 
       all = @klass.scopes[:all]
 
-      scope &all   if all
-      scope &block if block_given?
+      scope(&all)   if all
+      scope(&block) if block_given?
     end
 
     def each &block
@@ -37,15 +37,15 @@ module Lunr
       @executed
     end
 
-    def method_missing sym, *args
-      return super unless scope = klass.scopes[sym]
+    def method_missing name, *args
+      return super unless scope = klass.scopes[name]
 
       executable!
 
       dsl = @search.send :dsl
 
       if args.empty?
-        dsl.instance_eval &scope
+        dsl.instance_eval(&scope)
       else
         scope.call dsl, args
       end
@@ -58,8 +58,8 @@ module Lunr
     end
 
     def pages
-      total / per +
-        (total_entries % per_page > 0 ? 1 : 0)
+      @pages ||= total / per +
+        ((total_entries % per_page) > 0 ? 1 : 0)
     end
 
     def params
@@ -70,13 +70,15 @@ module Lunr
       @per ||= execute && @search.query.per_page
     end
 
-    def respond_to sym, include_private = false
-      klass.scopes.key?(sym) || super
+    def respond_to name, include_private = false
+      klass.scopes.key?(name) || super
     end
 
     def scope &block
       executable!
-      @search.build &block
+      @search.build(&block)
+
+      self
     end
 
     def total
@@ -95,27 +97,12 @@ module Lunr
     private
 
     def execute
-      unless @executed
+      unless executed?
         @executed = true
         @search.execute
 
         @results = @search.hits.map do |hit|
-          # FIX: this belongs in the model.
-          klass.new.tap do |model|
-            model.instance_variable_set :"@id", hit.primary_key
-
-            klass.properties.each do |name, type|
-              value = hit.stored name
-
-              # For text fields, which always appear to be multiple.
-
-              if Array === value && value.length == 1 && type == :text
-                value = value.first
-              end
-
-              model.instance_variable_set :"@#{name}", value
-            end
-          end
+          klass.create hit
         end
       end
 

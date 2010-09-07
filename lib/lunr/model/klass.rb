@@ -8,6 +8,26 @@ module Lunr
     end
 
     module Klass
+      def create hit
+        new.tap do |instance|
+          instance.id = hit.primary_key
+
+          properties.each do |name, type|
+            value = hit.stored name
+
+            # For text fields, which always appear to be multiple.
+
+            if Array === value && value.length == 1 && type == :text
+              value = value.first
+            end
+
+            instance.send "#{name}=", value
+          end
+
+          instance.freeze
+        end
+      end
+
       def first &block
         search(&block).first
       end
@@ -20,12 +40,12 @@ module Lunr
         @scopes ||= {}
       end
 
-      def scope sym = :all, &block
-        scopes[sym] = block
+      def scope name = :all, &block
+        scopes[name] = block
 
-        unless sym == :all
+        unless name == :all
           class_eval <<-END, __FILE__, __LINE__ + 1
-            def self.#{sym}; search.#{sym} end
+            def self.#{name}; search.#{name} end
           END
         end
       end
@@ -36,12 +56,12 @@ module Lunr
 
       alias_method :all, :search
 
-      def searches classname, &block
-        Sunspot::TypeField.alias self, classname
+      def searches classname = nil, &block
+        Sunspot::TypeField.alias self, classname if classname
         Sunspot.setup self, &block
 
         properties.each do |name, type|
-          attr_reader name
+          attr_accessor name
         end
       end
     end

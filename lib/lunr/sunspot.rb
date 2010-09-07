@@ -15,7 +15,7 @@ module Sunspot
       alias_method :original_initialize, :initialize
 
       def initialize *args
-        original_initialize *args
+        original_initialize(*args)
 
         if clazz = Sunspot::TypeField.aliases_inverted[@class_name]
           @class_name = clazz.name
@@ -39,6 +39,8 @@ module Sunspot
         @@inverted ||= aliases.invert
       end
     end
+
+    alias_method :old_to_indexed, :to_indexed
 
     def to_indexed clazz
       self.class.aliases[clazz] || clazz.name
