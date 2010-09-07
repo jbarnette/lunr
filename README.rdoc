@@ -6,13 +6,11 @@
 
 A simple read-only interface to Solr, built on Sunspot.
 
-Lunr makes it easy to query and create objects from a Solr index
-without requiring all the knowledge, code, and data that was used to
-build the index in the first place.
-
-If you have complex indexes with a stored fields and need to search /
-access those fields without access to the original data store, Lunr
-might be what you're looking for.
+Lunr makes it easy to query and create objects from a Sunspot-managed
+Solr index without requiring all the knowledge, code, and data used to
+build the index in the first place. If you have complex indexes with a
+stored fields and need to search / access those fields without access
+to the original data store, Lunr might be what you're looking for.
 
 == A Lunr Model
 
@@ -111,6 +109,8 @@ first param must be the Sunspot query object.
 
 == Searching
 
+Use Sunspot's excellent search DSL for ad hock searches.
+
     My::SimpleTrack.search
     My::SimpleTrack.all # same thing
 
@@ -137,8 +137,8 @@ method is called on the search object. For convenience,
 
 == Development
 
-Version number notwithstanding, Lunr is under pretty heavy
-development. It's missing a lot of tests, and will be in flux a
+Lunr is under pretty heavy development. It was extracted from a Real
+Application, and barely has any tests of its own. It will be in flux a
 bit. Contributions and suggestions are very welcome.
 
 Install the <code>isolate</code> gem and run <code>rake</code>. All
