@@ -1,3 +1,7 @@
+=== 2.0.4 / 2010-09-07
+
+* Unbreak model instantiation, switch to Hash backing store.
+
 === 2.0.3 / 2010-09-07
 
 * Cleanups, squash warnings.
