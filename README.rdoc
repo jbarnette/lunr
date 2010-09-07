@@ -47,7 +47,7 @@ to the original data store, Lunr might be what you're looking for.
 
 === Including the Module
 
-All model class must <code>include Lunr::Model</code>.
+All model classes must <code>include Lunr::Model</code>.
 
 === Define the Search Index
 
