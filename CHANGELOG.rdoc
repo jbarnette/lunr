@@ -1,3 +1,10 @@
+=== 2.0.3 / 2010-09-07
+
+* Cleanups, squash warnings.
+* Improve the README a bit.
+* Improve search and scope examples.
+* Remove unnecessary monkeypatch.
+
 === 2.0.2 / 2010-09-02
 
 * Fix Rakefile typo.
