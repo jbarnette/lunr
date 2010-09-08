@@ -74,6 +74,10 @@ module Lunr
       klass.scopes.key?(name) || super
     end
 
+    def results
+      execute && @results
+    end
+
     def scope &block
       executable!
       @search.build(&block)
