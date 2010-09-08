@@ -1,3 +1,7 @@
+=== 2.0.5 / 2010-09-08
+
+* Add default as_json method (just returns backing store).
+
 === 2.0.4 / 2010-09-07
 
 * Unbreak model instantiation, switch to Hash backing store.
