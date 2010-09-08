@@ -6,6 +6,10 @@ module Lunr
       @hash = hash
     end
 
+    def as_json options = nil
+      @hash
+    end
+
     def id
       @hash[:id]
     end
