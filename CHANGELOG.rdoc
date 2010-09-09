@@ -1,3 +1,8 @@
+=== 2.0.6 / 2010-09-09
+
+* Improve booleans. Fix Sunspot's cast, add property? sugar method.
+* Add Search#results (a faster to_a).
+
 === 2.0.5 / 2010-09-08
 
 * Add default as_json method (just returns backing store).
