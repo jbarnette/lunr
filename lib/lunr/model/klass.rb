@@ -65,6 +65,8 @@ module Lunr
               @hash[#{name.inspect}]
             end
           END
+
+          alias_method "#{name}?", name if type == :boolean
         end
       end
     end

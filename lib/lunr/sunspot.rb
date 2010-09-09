@@ -24,6 +24,14 @@ module Sunspot
     end
   end
 
+  module Type
+    class BooleanType
+      def cast thing
+        thing == "true" ? true : thing == "false" ? false : !!thing
+      end
+    end
+  end
+
   class TypeField
     class << self
       def alias(dest_class, source_class_name)
