@@ -22,7 +22,7 @@ module Lunr
           hash[name] = value
         end
 
-        new(hash).freeze
+        new hash
       end
 
       def first &block
