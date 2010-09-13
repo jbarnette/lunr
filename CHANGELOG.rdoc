@@ -1,5 +1,9 @@
 === 2.0.8 / 2010-09-13
 
+* Store pagination and total info in default Search JSON.
+
+=== 2.0.8 / 2010-09-13
+
 * Add a default Lunr::Search#as_json.
 
 === 2.0.7 / 2010-09-11
