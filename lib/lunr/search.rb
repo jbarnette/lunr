@@ -22,7 +22,13 @@ module Lunr
     end
 
     def as_json options = nil
-      results.map { |r| r.as_json options }
+      {}.tap do |j|
+        j[:page]  = page
+        j[:total] = total
+
+        key = options.delete(:key) if Hash === options
+        j[key || :entries] = map { |e| e.as_json options }
+      end
     end
 
     def each &block
