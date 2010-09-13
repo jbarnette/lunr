@@ -21,6 +21,10 @@ module Lunr
       scope(&block) if block_given?
     end
 
+    def as_json options = nil
+      results.map { |r| r.as_json options }
+    end
+
     def each &block
       execute && @results.each(&block)
     end
